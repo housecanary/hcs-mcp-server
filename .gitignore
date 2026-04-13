@@ -1,0 +1,8 @@
+.venv
+.tmp-verify-venv
+.pytest_cache
+__pycache__
+dist
+build
+*.egg-info
+.DS_Store

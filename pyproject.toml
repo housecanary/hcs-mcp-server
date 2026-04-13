@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "housecanary-mcp"
+version = "0.1.0"
+description = "HouseCanary API MCP server"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [
+  { name = "HouseCanary" }
+]
+dependencies = [
+  "fastmcp",
+  "httpx",
+  "PyYAML",
+]
+
+[project.scripts]
+housecanary-mcp = "housecanary_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/housecanary_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/housecanary_mcp/openapi.yaml",
+  "/src/housecanary_mcp/*.py",
+  "/README.md",
+]
