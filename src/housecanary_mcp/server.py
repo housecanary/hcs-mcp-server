@@ -87,6 +87,7 @@ def create_server(username: str | None, password: str | None) -> FastMCP:
         lifespan=server_lifespan,
         route_maps=[
             RouteMap(methods=['POST'], mcp_type=MCPType.EXCLUDE),
+            RouteMap(pattern=r'component_mget$', mcp_type=MCPType.EXCLUDE),
         ]
     )
 
