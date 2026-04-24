@@ -1,6 +1,6 @@
 # housecanary-mcp
 
-A FastMCP server generated from the HouseCanary OpenAPI spec.
+An MCP wrapper for the HouseCanary Analytics and Portfolio Monitoring APIs. Access HouseCanary's proprietary analytics and public records data across multiple geographic levels—from individual properties to states—with support for v2 and v3 endpoints. Includes endpoints for property valuation, rental estimates, market analysis, disaster risk assessment, school information, and portfolio management.
 
 ## Install
 
