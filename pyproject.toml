@@ -30,3 +30,17 @@ include = [
   "/src/housecanary_mcp/*.py",
   "/README.md",
 ]
+
+[tool.uv.workspace]
+members = [
+    ".",
+    ".",
+]
+
+[tool.uv.sources]
+housecanary-mcp = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "housecanary-mcp",
+]

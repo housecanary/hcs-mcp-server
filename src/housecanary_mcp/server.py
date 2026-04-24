@@ -8,6 +8,7 @@ from pathlib import Path
 import httpx
 import yaml
 from fastmcp import FastMCP
+from fastmcp.server.openapi import RouteMap, MCPType
 
 DEFAULT_TIMEOUT = 30.0
 
@@ -84,6 +85,9 @@ def create_server(username: str | None, password: str | None) -> FastMCP:
         client=client,
         name="HouseCanary",
         lifespan=server_lifespan,
+        route_maps=[
+            RouteMap(methods=['POST'], mcp_type=MCPType.EXCLUDE),
+        ]
     )
 
 
