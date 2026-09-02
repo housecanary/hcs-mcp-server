@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
+import httpx
 import pytest
 
-from housecanary_mcp import server
+from housecanary_mcp import __version__, server
 
 
 def test_build_client_requires_server_url() -> None:
@@ -33,3 +34,28 @@ def test_create_server_smoke(
 
     assert result is fake_server
     build_client_mock.assert_called_once_with(load_openapi_spec_mock.return_value, "user", "pass")
+
+
+def test_build_client_sends_x_caller() -> None:
+    client = server.build_client({"servers": [{"url": "https://example.com"}]}, None, None)
+
+    assert client.headers["X-Caller"] == "housecanary-mcp"
+
+
+def test_x_caller_is_unversioned() -> None:
+    # x_caller is varchar(100) and usage reporting groups by it, so the value must stay
+    # stable across releases. Version detail belongs in User-Agent.
+    assert server.X_CALLER == "housecanary-mcp"
+
+    client = server.build_client({"servers": [{"url": "https://example.com"}]}, None, None)
+
+    assert client.headers["User-Agent"] == f"housecanary-mcp/{__version__}"
+
+
+def test_build_client_sends_x_caller_with_auth() -> None:
+    client = server.build_client(
+        {"servers": [{"url": "https://example.com"}]}, "user", "pass"
+    )
+
+    assert client.headers["X-Caller"] == "housecanary-mcp"
+    assert isinstance(client.auth, httpx.BasicAuth)
