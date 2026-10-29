@@ -8,7 +8,7 @@ from pathlib import Path
 import httpx
 import yaml
 from fastmcp import FastMCP
-from fastmcp.server.openapi import RouteMap, MCPType
+from fastmcp.server.providers.openapi import RouteMap, MCPType
 
 from housecanary_mcp import __version__
 
