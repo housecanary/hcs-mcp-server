@@ -4,16 +4,16 @@ build-backend = "hatchling.build"
 
 [project]
 name = "housecanary-mcp"
-version = "0.2.0"
+version = "0.2.1"
 description = "HouseCanary API MCP server"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "Proprietary" }
 authors = [
   { name = "HouseCanary" }
 ]
 dependencies = [
-  "fastmcp",
+  "fastmcp>=3,<4",
   "httpx",
   "PyYAML",
 ]
