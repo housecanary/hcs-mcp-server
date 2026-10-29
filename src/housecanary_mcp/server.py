@@ -10,7 +10,16 @@ import yaml
 from fastmcp import FastMCP
 from fastmcp.server.openapi import RouteMap, MCPType
 
+from housecanary_mcp import __version__
+
 DEFAULT_TIMEOUT = 30.0
+
+# SPLAT-1770: tags MCP-originated traffic so it can be told apart from other API clients.
+# The gateway forwards X-Caller untouched, and it is meant to reach
+# reporting.billing_usage.x_caller. Keep it a stable, unversioned literal -- x_caller is
+# varchar(100) and usage reporting groups by it, so a version suffix would fragment every
+# report. Version detail goes in User-Agent instead.
+X_CALLER = "housecanary-mcp"
 
 
 def resolve_spec_path() -> Path:
@@ -64,6 +73,10 @@ def build_client(
     client_kwargs = {
         "base_url": servers[0]["url"],
         "timeout": DEFAULT_TIMEOUT,
+        "headers": {
+            "X-Caller": X_CALLER,
+            "User-Agent": f"{X_CALLER}/{__version__}",
+        },
     }
     if username and password:
         client_kwargs["auth"] = httpx.BasicAuth(username, password)
